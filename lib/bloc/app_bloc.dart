@@ -20,7 +20,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }) : super(const AppState.empty()) {
     on<LoadNextUrlEvent>(
       (event, emit) async {
-        emit(const AppState(isLoading: true, data: null, error: null));
+        emit(const AppState(
+          isLoading: true,
+          data: null,
+          error: null,
+        ));
         final url = (urlPicker ?? _pickRandomUrl)(urls);
 
         try {
@@ -29,9 +33,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           }
           final bundle = NetworkAssetBundle(Uri.parse(url));
           final data = (await bundle.load(url)).buffer.asUint8List();
-          emit(AppState(isLoading: false, data: data, error: null));
+          emit(AppState(
+            isLoading: false,
+            data: data,
+            error: null,
+          ));
         } catch (e) {
-          emit(AppState(isLoading: false, data: null, error: e));
+          emit(AppState(
+            isLoading: false,
+            data: null,
+            error: e,
+          ));
         }
       },
     );
